@@ -21,7 +21,7 @@ This project marks my transition from Object-Oriented Console Applications to We
 ## How to Run
 1. Clone the repo: `git clone https://github.com/steveBuelow/SmartProductivityManager.git`
 2. Install dependencies: `pip install -r requirements.txt`
-3. Run the application: `python smart-task-manager.py`
+3. Run the application: `python app.py`
 
 ##  API & Usage
 Navigation is currently handled via URL parameters. While the server is running locally (usually on `http://127.0.0.1:5000`), use the following routes:
