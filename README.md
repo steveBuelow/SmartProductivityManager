@@ -19,7 +19,7 @@ This project marks my transition from Object-Oriented Console Applications to We
 * **Environment Design:** Managing server-side logic vs. client-side requests.
 
 ## How to Run
-1. Clone the repo: `git clone [Your-URL-Here]`
+1. Clone the repo: `git clone https://github.com/steveBuelow/SmartProductivityManager.git`
 2. Install dependencies: `pip install -r requirements.txt`
 3. Run the application: `python smart-task-manager.py`
 
