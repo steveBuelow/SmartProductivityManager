@@ -1,0 +1,15 @@
+# macOS junk
+._*
+.DS_Store
+
+# Python junk
+__pycache__/
+*.pyc
+
+# Database
+*.db
+*.sqlite3
+
+# Environments
+venv/
+.env
