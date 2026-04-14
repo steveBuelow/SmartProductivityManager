@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Productivity Manager</title>
+    
+    <style>
+        /* CSS = THE DESIGN (Skin) */
+        
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 500px; 
+            margin: 40px auto; 
+            padding: 20px; 
+        }
+
+        /* THE ".hidden" TRICK:
+           The dot "." means this is a 'class'. 
+           'display: none' tells the browser: "Act like this doesn't exist." 
+           We use this to hide the Task List until the user logs in.
+        */
+        .hidden { display: none; }
+        
+        .task { 
+            border-bottom: 1px solid #ccc; 
+            padding: 10px 0; 
+            display: flex; /* Flexbox: puts things in a row */
+            justify-content: space-between; /* Pushes Title to left, Button to right */
+            align-items: center;
+        }
+        
+        input, button { padding: 8px; margin-top: 5px; }
+    </style>
+</head>
+<body>
+    <div id="signup-section">
+        <h2>Sign Up</h2>
+        <input type="text" id="new-username" placeholder="New Username">
+        <input type="password" id="new-password" placeholder="New Password">
+        <button onclick="signup()">Create Account</button>
+    </div>
+
+    <hr> 
+
+    <div id="login-section">
+        <h2>Login</h2>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="login()">Login</button>
+    </div>
+
+    <div id="task-section" class="hidden">
+        <h2>My Tasks</h2>
+        <form id="add-task-form">
+            <input type="text" id="task-title" placeholder="What needs doing?" required>
+            <input type="date" id="task-date">
+            <button type="submit">Add Task</button>
+        </form>
+        <div id="task-list"></div>
+    </div>
+
+    <script>
+        /* JAVASCRIPT = THE LOGIC (Brain) */
+
+        /* WHAT IS "async"? 
+           Short for "asynchronous". It tells the browser: 
+           "This function is going to talk to a server. It might take a second. 
+           Keep the rest of the page running while we wait."
+        */
+        async function signup() {
+            const username = document.getElementById('new-username').value;
+            const password = document.getElementById('new-password').value;
+
+            /* "await" means "Pause this function here until the server responds." 
+               Without it, JS would try to move to the next line before the server replied!
+            */
+            const response = await fetch('/signup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                alert("Account created!");
+            } else {
+                alert("Error: " + data.error);
+            }
+        }
+
+        async function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            const response = await fetch('/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password }) 
+            });
+
+            if (response.ok) {
+                /* LOGIC: "classList.add" and "classList.remove" 
+                   This is how we show/hide things. We add the 'hidden' class 
+                   to the login/signup boxes and remove it from the tasks box.
+                */
+                document.getElementById('signup-section').classList.add('hidden');
+                document.getElementById('login-section').classList.add('hidden');
+                document.getElementById('task-section').classList.remove('hidden');
+                loadTasks(); 
+            }
+        }
+
+        async function loadTasks() {
+            const response = await fetch('/tasks');
+            if (response.ok) {
+                const data = await response.json();
+                const list = document.getElementById('task-list');
+                list.innerHTML = ''; 
+
+                data.tasks.forEach(task => {
+                    /* NOTE ON LOGIC: 
+                       'task.due_date || "No Date"' is a shortcut. 
+                       It says: "If there is a due_date, show it. Otherwise, show the text 'No Date'."
+                    */
+                    const displayDate = task.due_date || "No Date";
+
+                    /* THE TEMPLATE LITERAL (Backticks ` `):
+                       We are injecting the 'displayDate' variable into the HTML 
+                       using the ${} syntax.
+                    */
+                    list.innerHTML += `
+                        <div class="task">
+                            <div>
+                                <strong>${task.title}</strong> <br>
+                                <small style="color: #666;">Due: ${displayDate}</small>
+                            </div>
+                            <button onclick="deleteTask(${task.id})">Delete</button>
+                        </div>
+                    `;
+                });
+            }
+        }
+
+        async function deleteTask(taskId) {
+            await fetch('/remove-task', {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: taskId })
+            });
+            loadTasks(); // Refresh the list after the delete is done
+        }
+
+        document.getElementById('add-task-form').addEventListener('submit', async (e) => {
+            /* e.preventDefault(): 
+               By default, HTML forms try to refresh the whole page when you hit 'Submit'. 
+               This stops that refresh so our JavaScript can handle it silently.
+            */
+            e.preventDefault(); 
+            
+            const title = document.getElementById('task-title').value;
+            const date = document.getElementById('task-date').value;
+
+            const response = await fetch('/add-task', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title, date })
+            });
+
+            if (response.ok) {
+                document.getElementById('task-title').value = ''; 
+                loadTasks(); 
+            }
+        });
+    </script>
+</body>
+</html>

@@ -17,14 +17,7 @@ def find_user(username, password):
             "SELECT id FROM users WHERE username=? AND password=?",
             (username, hash_password(password))
         ).fetchone()
-
-def create_task(title, date, user_id):
-    with get_db() as conn:
-        conn.execute(
-            "INSERT INTO tasks (title, due_date, user_id) VALUES (?, ?, ?)",
-            (title, date, user_id)
-        )
-
+    
 def get_tasks(user_id):
     with get_db() as conn:
         return conn.execute(
@@ -32,9 +25,18 @@ def get_tasks(user_id):
             (user_id,)
         ).fetchall()
 
+def create_task(title, date, user_id):
+    with get_db() as conn:
+        conn.execute(
+            "INSERT INTO tasks (title, due_date, user_id) VALUES (?, ?, ?)",
+            (title, date, user_id)
+        )
+        conn.commit()  # <--- SAVE THE DATA
+
 def delete_task(task_id, user_id):
     with get_db() as conn:
         conn.execute(
             "DELETE FROM tasks WHERE id=? AND user_id=?",
             (task_id, user_id)
         )
+        conn.commit()  # <--- SAVE THE DELETION
