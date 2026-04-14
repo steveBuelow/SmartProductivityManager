@@ -28,20 +28,19 @@ Built to bridge the gap between backend logic and interactive web interfaces, fo
 * **db.py / models.py:** Database schema and logic.
 
 ## How to Run
-1.  **Clone the repo:**
+1. 1. **Clone the repo:**
     ```bash
-    git clone [https://github.com/steveBuelow/SmartProductivityManager.git](https://github.com/steveBuelow/SmartProductivityManager.git)
-    cd SmartProductivityManager
-    ```
-2.  **Install dependencies:**
+   git clone [https://github.com/steveBuelow/SmartProductivityManager.git](https://github.com/steveBuelow/SmartProductivityManager.git)
+   cd SmartProductivityManager
+3.  **Install dependencies:**
     ```bash
     pip install -r requirements.txt
     ```
-3.  **Run the application:**
+4.  **Run the application:**
     ```bash
     python app.py
     ```
-4.  **Access the UI:**
+5.  **Access the UI:**
     Open your browser to `http://127.0.0.1:5000/`
 
 ## API Reference
