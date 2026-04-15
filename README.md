@@ -1,5 +1,14 @@
 # Smart Productivity Manager
 
+[View Live Demo](https://smartproductivitymanager.onrender.com)
+
+A full-stack task management web application built with Flask, SQLite, and vanilla JavaScript.
+This project demonstrates backend API design, session-based authentication, persistent storage, and dynamic frontend updates without page refreshes.
+
+Built to bridge the gap between backend logic and interactive web interfaces, focusing on state management and secure data handling.
+
+---
+
 ## Preview
 
 ### Login
@@ -9,12 +18,6 @@
 ### Dashboard
 
 <img width="871" height="382" alt="dashboard-SmartProductivityManager" src="https://github.com/user-attachments/assets/932b0ba1-4221-4308-90b8-852acefa78e0" />
-
-
-A full-stack task management web application built with Flask, SQLite, and vanilla JavaScript.
-This project demonstrates backend API design, session-based authentication, persistent storage, and dynamic frontend updates without page refreshes.
-
-Built to bridge the gap between backend logic and interactive web interfaces, focusing on state management and secure data handling.
 
 ---
 
