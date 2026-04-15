@@ -3,6 +3,8 @@
 A full-stack task management web application built with Flask, SQLite, and vanilla JavaScript.
 This project demonstrates backend API design, session-based authentication, persistent storage, and dynamic frontend updates without page refreshes.
 
+Built to bridge the gap between backend logic and interactive web interfaces, focusing on state management and secure data handling.
+
 ---
 
 ## Overview
