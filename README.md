@@ -1,6 +1,6 @@
 # Smart Productivity Manager
 
-[View Live Demo](https://smartproductivitymanager.onrender.com)
+## [View Live Demo](https://smartproductivitymanager.onrender.com)
 
 A full-stack task management web application built with Flask, SQLite, and vanilla JavaScript.
 This project demonstrates backend API design, session-based authentication, persistent storage, and dynamic frontend updates without page refreshes.
